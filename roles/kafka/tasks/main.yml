@@ -1,0 +1,30 @@
+---
+
+- include: account.yml
+
+- name: download kafka {{ kafka_version }}
+  get_url: url={{ kafka_tarball_url }}
+           dest=/root/{{ kafka_version }}.tgz
+
+- name: extract tarball to {{ kafka_dir }}
+  unarchive: src=/root/{{ kafka_version }}.tgz dest=/opt/
+             copy=no creates={{ kafka_dir }}
+
+- name: kafka top-level log directory
+  file: name={{ kafka_log_dir }} state=directory
+        mode=0755 owner={{ kafka_user }}
+
+- name: kafka server.properties
+  template: src=.{{ kafka_propfile }}.j2 dest={{ kafka_propfile }}
+            mode=0444
+  notify: bounce kafka
+
+- name: kafka systemd unit
+  template: src=etc/systemd/system/kafka.service.j2
+            dest=/etc/systemd/system/kafka.service
+  notify:
+    - refresh systemd
+    - bounce kafka
+
+- name: kafka service
+  service: name=kafka state=running enabled=yes

@@ -1,0 +1,13 @@
+[Unit]
+Description=Kafka Broker
+After=network.target
+
+[Service]
+ExecStart={{ kafka_dir }}/bin/kafka-server-start.sh {{ kafka_propfile }}
+Restart=always
+StartLimitBurst=3
+User={{ kafka_user }}
+LimitNOFILE={{ kafka_maxfiles }}
+
+[Install]
+WantedBy=multi-user.target

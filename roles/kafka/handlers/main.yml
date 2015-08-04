@@ -1,0 +1,5 @@
+- name: bounce kafka
+  service: name=kafka state=restarted
+
+- name: refresh systemd
+  command: /usr/bin/systemctl daemon-reload

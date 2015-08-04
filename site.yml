@@ -1,0 +1,11 @@
+---
+
+- hosts: brokers
+  sudo: yes
+  roles:
+    - { role: kafka, zk_group: zookeepers }
+
+- hosts: zookeepers
+  sudo: yes
+  roles:
+    - zookeeper

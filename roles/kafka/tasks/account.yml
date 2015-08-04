@@ -1,0 +1,3 @@
+- name: kafka account
+  user: name={{ kafka_user }} createhome=no
+        home={{ kafka_dir }} move_home=yes
