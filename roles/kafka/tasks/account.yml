@@ -1,3 +1,8 @@
 - name: kafka account
   user: name={{ kafka_user }} createhome=no
         home={{ kafka_dir }} move_home=yes
+
+- name: tweak {{ kafka_user }} ulimits
+  template: src=etc/security/limits.d/99-kafka-ulimit.conf.j2
+            dest=/etc/security/limits.d/99-kafka-ulimit.conf
+            owner=root group=root mode=0555

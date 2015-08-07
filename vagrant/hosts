@@ -4,6 +4,7 @@ zk1
 [brokers]
 kafka1 kafka_broker_id=1
 kafka2 kafka_broker_id=2
+kafka3 kafka_broker_id=3
 
 [all:vars]
 # connection details

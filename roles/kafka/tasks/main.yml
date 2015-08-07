@@ -14,17 +14,23 @@
   file: name={{ kafka_log_dir }} state=directory
         mode=0755 owner={{ kafka_user }}
 
+- name: create (sys)log directory
+  file: path={{ kafka_dir }}/logs state=directory
+        owner={{ kafka_user }} mode=0755
+
+- name: symlink /var/log/kafka -> {{ kafka_dir }}/logs
+  file: src={{ kafka_dir }}/logs dest=/var/log/kafka
+        state=link mode=0444 force=yes
+
 - name: kafka server.properties
   template: src=.{{ kafka_propfile }}.j2 dest={{ kafka_propfile }}
             mode=0444
   notify: bounce kafka
 
-- name: kafka systemd unit
-  template: src=etc/systemd/system/kafka.service.j2
-            dest=/etc/systemd/system/kafka.service
-  notify:
-    - refresh systemd
-    - bounce kafka
+- name: kafka upstart config
+  template: src=etc/init/kafka.conf.j2 dest=/etc/init/kafka.conf
+            mode=0555 owner=root group=root
+  notify: bounce kafka
 
 - name: kafka service
   service: name=kafka state=running enabled=yes

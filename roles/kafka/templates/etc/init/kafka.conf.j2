@@ -1,0 +1,16 @@
+# kafka (Upstart unit)
+description Kafka
+
+start on stopped rc RUNLEVEL=[2345]
+stop on runlevel [06]
+
+env USERID='{{ kafka_user }}'
+env HOME='{{ kafka_dir }}'
+
+script
+su - $USERID -c '{{ kafka_dir }}/bin/kafka-server-start.sh {{ kafka_propfile }}'
+end script
+
+respawn
+respawn limit 10 10
+kill timeout 10

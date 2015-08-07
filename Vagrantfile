@@ -10,6 +10,7 @@ hosts = [
   {:name => "zk1",    :ip => "10.4.0.21", :ram => 1024},
   {:name => "kafka1", :ip => "10.4.0.22", :ram => 1900},
   {:name => "kafka2", :ip => "10.4.0.23", :ram => 1900},
+  {:name => "kafka3", :ip => "10.4.0.24", :ram => 1900},
 ]
 
 Vagrant.configure("2") do |config|
@@ -24,8 +25,8 @@ Vagrant.configure("2") do |config|
   hosts.each do |host|
     config.vm.define host[:name] do |c|
 
-      c.vm.box = "boxcutter/centos71"
-      c.vm.box_version = "1.0.17"
+      c.vm.box = "box-cutter/centos66"
+      c.vm.box_version = "1.0.16"
 
       # stop Vagrant 'helping'
       c.ssh.insert_key = false

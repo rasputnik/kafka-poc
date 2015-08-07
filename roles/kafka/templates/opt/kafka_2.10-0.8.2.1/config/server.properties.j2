@@ -14,19 +14,20 @@ port=9092
 # Hostname the broker will advertise to producers and consumers. If not set, it uses the
 # value for "host.name" if configured.  Otherwise, it will use the value returned from
 # java.net.InetAddress.getCanonicalHostName().
-#advertised.host.name=<hostname routable by clients>
+
+advertised.host.name={{ ansible_nodename }}
 
 # The number of threads handling network requests
-num.network.threads=2
+num.network.threads=3
  
 # The number of threads doing disk I/O
 num.io.threads=8
 
 # The send buffer (SO_SNDBUF) used by the socket server
-socket.send.buffer.bytes=1048576
+socket.send.buffer.bytes=102400
 
 # The receive buffer (SO_RCVBUF) used by the socket server
-socket.receive.buffer.bytes=1048576
+socket.receive.buffer.bytes=102400
 
 # The maximum size of a request that the socket server will accept (protection against OOM)
 socket.request.max.bytes=104857600
@@ -41,6 +42,10 @@ log.dirs={{ kafka_log_dirs | join(',') }}
 # parallelism for consumption, but this will also result in more files across
 # the brokers.
 num.partitions={{ kafka_partitions }}
+
+# The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.
+# This value is recommended to be increased for installations with data dirs located in RAID array.
+num.recovery.threads.per.data.dir=1
 
 ############################# Log Flush Policy #############################
 
@@ -69,8 +74,12 @@ num.partitions={{ kafka_partitions }}
 # The minimum age of a log file to be eligible for deletion
 log.retention.hours={{ kafka_retention_hours }}
 
+# A size-based retention policy for logs. Segments are pruned from the log as long as the remaining
+# segments don't drop below log.retention.bytes.
+#log.retention.bytes=1073741824
+
 # The maximum size of a log segment file. When this size is reached a new log segment will be created.
-log.segment.bytes=536870912
+log.segment.bytes=1073741824
 
 # The interval at which log segments are checked to see if they can be deleted according 
 # to the retention policies
@@ -90,4 +99,4 @@ log.cleaner.enable=false
 zookeeper.connect={{ kafka_zk_url }}
 
 # Timeout in ms for connecting to zookeeper
-zookeeper.connection.timeout.ms=1000000
+zookeeper.connection.timeout.ms=6000

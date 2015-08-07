@@ -4,17 +4,20 @@ kafka_dir: /opt/kafka_2.10-{{ kafka_version }}
 kafka_tarball_url: http://mirrors.ukfast.co.uk/sites/ftp.apache.org/kafka/{{ kafka_version }}/kafka_2.10-{{ kafka_version }}.tgz
 
 kafka_user: kafka
-# handled by systemd
 kafka_maxfiles: 64000
 
 kafka_propfile: "{{ kafka_dir }}/config/server.properties"
+# remaining vars in this file template kafka_propfile
 
-kafka_zk_url: "{{ groups[zk_group] | join(':2181,') }}:2181/kafka"
+# 'chroot' of settings under this znode
+kafka_root_znode : /kafka
+
+kafka_zk_url: "{{ groups[zk_group] | join(':2181,') }}:2181{{ kafka_root_znode }}"
 
 # default partitions per topic
 kafka_partitions: 10
 
-# log stuff
+# log stuff (i.e. where the queue lives, not syslog)
 kafka_log_dir: /var/kafka
 kafka_log_dirs:
   - /var/kafka/log1

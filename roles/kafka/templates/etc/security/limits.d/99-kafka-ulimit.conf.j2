@@ -1,0 +1,8 @@
+# 99- prefix so this happens _after_
+# 90-nproc.conf and turn limit back up
+# for {{ kafka_user }}
+
+{{ kafka_maxfiles }}       soft    nproc     unlimited
+{{ kafka_maxfiles }}       hard    nproc     unlimited
+{{ kafka_maxfiles }}       soft    nofiles     unlimited
+{{ kafka_maxfiles }}       hard    nofiles     unlimited
