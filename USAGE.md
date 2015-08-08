@@ -7,7 +7,7 @@ know their details.
 If you used the hostmanager plugin, names should resolve fine.
 
 
-# zookeeprs list
+# zookeepers list
 
 Consumers tend to use this. We have one, and the kafka config
 is put under the /kafka znode, so you want:
