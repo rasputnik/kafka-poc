@@ -10,13 +10,15 @@ If you used the hostmanager plugin, names should resolve fine.
 # zookeeprs list
 
 Consumers tend to use this. We have one, and the kafka config
-is put under the /kafka znode, so you want
+is put under the /kafka znode, so you want:
 
     zk1:2181/kafka
 
 # broker list
 
-Producers typically need this rather than just a zk URL.
+Producers in 0.8 no longer have a zookeper dependency. Instead, you need to provide 
+a list of brokers (can just be one - the client discovers the full list from the
+first broker it finds):
 
     kafka1:9092,kafka2:9092,kafka3:9092
 
