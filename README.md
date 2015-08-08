@@ -7,7 +7,7 @@ tested on OSX host.
 
 # install
 
-    vagrant plugin hostmanager install
+    vagrant plugin install vagrant-hostmanager
     vagrant up
     ansible-playbook -i vagrant/ site.yml
 
