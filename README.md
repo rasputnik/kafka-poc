@@ -8,7 +8,7 @@ tested on OSX host.
 # install
 
     vagrant plugin hostmanager install
-
+    vagrant up
     ansible-playbook -i vagrant/ site.yml
 
 Then see **USAGE.md**.
