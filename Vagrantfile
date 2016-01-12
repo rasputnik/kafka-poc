@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     config.vm.define host[:name] do |c|
 
       c.vm.box = "box-cutter/centos66"
-      c.vm.box_version = "1.0.16"
+      c.vm.box_version = "2.0.11"
 
       # stop Vagrant 'helping'
       c.ssh.insert_key = false
